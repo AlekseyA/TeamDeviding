@@ -11,7 +11,7 @@ public class Player {
     public Player(String n, int s){
         name = n;
         skill = s;
-        MainActivity.playersList.add(this);
+        //MainActivity.playersList.add(this);
     }
 
     public String getName() { return name; }
