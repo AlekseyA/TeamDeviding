@@ -4,19 +4,31 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static com.n1.teamdeviding.app.R.drawable.player;
 import static com.n1.teamdeviding.app.R.drawable.selector;
 
 
 public class MainActivity extends Activity {//implements AdapterView.OnItemSelectedListener {
 
     public ArrayList<Player> playersList = new ArrayList<Player>();
+    ActionMode actionMode;
     CustomAdapter adapter;
     GridView gridView;
     final String LOG_TAG = "myLogs";
@@ -29,40 +41,87 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemSelec
         createList();
 
         adapter = new CustomAdapter(this, playersList);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.test, data);
         gridView = (GridView)findViewById(R.id.gridView);
-        gridView.setAdapter(adapter);
-        gridView.setSelected(true);
-        adjustGridView();
-//        gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
-//        gridView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-//            @Override
-//            public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-//                System.out.println("clicked to: " + i);
-//            }
-//        });
-        gridView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        gridView.setAdapter(new myAdapter());
+        gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
+        gridView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                view.setBackgroundColor(selector);
-
-                Log.d(LOG_TAG, "Was checked " + i);
+            public void onItemCheckedStateChanged(ActionMode actionMode, int pos, long id, boolean checked) {
+                Log.d(LOG_TAG, "pos = " + pos + ", checked = " + checked);
+                int selectCount = gridView.getCheckedItemCount();
+                switch (selectCount){
+                    case 1:
+                        actionMode.setSubtitle("One player selected");
+                        break;
+                    default:
+                        actionMode.setSubtitle("" + selectCount + " player selected");
+                        break;
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.d(LOG_TAG, "Nothing :(");
+            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+                actionMode.setTitle("Select players");
+                actionMode.setSubtitle("One player selected");
+                //actionMode.getMenuInflater().inflate(R.menu.context, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+//                actionMode.finish();
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode actionMode) {
+
             }
         });
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                System.out.println("Was touched " + i);
-                Log.d(LOG_TAG, "Was touched " + i);
-            }
-        });
-;
     }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    public void onClick(View v){
+        if(actionMode == null)
+            Toast.makeText(this, "GO!", Toast.LENGTH_SHORT).show();
+            //actionMode = startActionMode(callback);
+        else
+            Toast.makeText(this, "STOP", Toast.LENGTH_SHORT).show();
+    }
+
+    /*private ActionMode.Callback callback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+            actionMode.getMenuInflater().inflate(R.menu.context, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            Log.d(LOG_TAG,"item " + menuItem.getTitle());
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            actionMode = null;
+        }
+    };*/
 
     private void createList(){
 
@@ -103,5 +162,53 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemSelec
         gridView.setVerticalSpacing(10);
         gridView.setHorizontalSpacing(10);
 //        gridView.setStretchMode(GridView.STRETCH_SPACING_UNIFORM);
+    }
+
+    private class myAdapter extends BaseAdapter {
+
+        public myAdapter(){
+
+        }
+
+        @Override
+        public int getCount() {
+            return playersList.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return playersList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int pos, View convertView, ViewGroup parent) {
+
+            CheckableLayout checkableLayout;
+            ImageView img = null;
+            TextView textView;
+            if (convertView == null){
+//                img = new ImageView(MainActivity.this);
+//                img.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//                img.setLayoutParams(new ViewGroup.LayoutParams(150, 150));
+//
+//                textView = new TextView(MainActivity.this);
+//                textView.setLayoutParams(new ViewGroup.LayoutParams(150, 80));
+
+                checkableLayout = new CheckableLayout(MainActivity.this);
+                checkableLayout.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
+//                checkableLayout.addView(img);
+//                checkableLayout.addView(textView);
+            } else {
+                checkableLayout = (CheckableLayout)convertView;
+//                img = (ImageView)checkableLayout.getChildAt(0);
+            }
+//            img.setImageResource(R.drawable.player);
+            return checkableLayout;
+        }
     }
 }
