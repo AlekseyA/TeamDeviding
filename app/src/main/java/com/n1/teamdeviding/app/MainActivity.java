@@ -43,7 +43,7 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemSelec
         adapter = new CustomAdapter(this, playersList);
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.test, data);
         gridView = (GridView)findViewById(R.id.gridView);
-        gridView.setAdapter(new myAdapter());
+        gridView.setAdapter(adapter);
         gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
         gridView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override

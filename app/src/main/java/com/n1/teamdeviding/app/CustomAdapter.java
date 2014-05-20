@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Checkable;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,20 +39,19 @@ public class CustomAdapter extends ArrayAdapter<Player> {
 
         if(convertView == null){
             checkableLayout = new CheckableLayout(context);
-            checkableLayout.setLayoutParams(new CheckableLayout.LayoutParams(CheckableLayout.LayoutParams.MATCH_PARENT, CheckableLayout.LayoutParams.MATCH_PARENT));
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item, parent, false);
+            checkableLayout.setLayoutParams(new GridView.LayoutParams(CheckableLayout.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
+//            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            convertView = inflater.inflate(R.layout.item, parent, false);
         } else {
             checkableLayout = (CheckableLayout)convertView;
         }
 
-// TODO
-//        checkableLayout.setTextResId(get);
-
-        TextView textView = (TextView)convertView.findViewById(R.id.textItem);
+        ImageView imageView = (ImageView)checkableLayout.findViewById(R.id.imgItem);
+        TextView textView = (TextView)checkableLayout.findViewById(R.id.textItem);
         Player player = playerList.get(position);
+        imageView.setImageResource(R.drawable.player);
         textView.setText(player.getName());
-        return convertView;
+        return checkableLayout;
     }
 
 }
