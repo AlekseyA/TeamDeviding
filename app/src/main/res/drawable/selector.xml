@@ -11,11 +11,6 @@
             <corners android:radius="10dp"/>
         </shape>
     </item>
-    <item android:drawable="@color/orange" android:state_pressed="true">
-        <shape>
-            <corners android:radius="10dp"/>
-        </shape>
-    </item>
     <item android:drawable="@color/transparent">
         <shape>
             <corners android:radius="10dp"/>

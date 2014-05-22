@@ -49,7 +49,7 @@ public class CustomAdapter extends ArrayAdapter<Player> {
         ImageView imageView = (ImageView)checkableLayout.findViewById(R.id.imgItem);
         TextView textView = (TextView)checkableLayout.findViewById(R.id.textItem);
         Player player = playerList.get(position);
-        imageView.setImageResource(R.drawable.player);
+        imageView.setImageResource(player.getPhoto());
         textView.setText(player.getName());
         return checkableLayout;
     }

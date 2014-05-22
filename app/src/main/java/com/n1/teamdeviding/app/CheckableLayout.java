@@ -40,6 +40,7 @@ public class CheckableLayout extends RelativeLayout implements Checkable {
     public void setChecked(boolean checked) {
         mChecked = checked;
         mSelTextView.setBackgroundColor(checked ? getResources().getColor(R.color.cool_green) : getResources().getColor(R.color.orange));
+                //setBackgroundResource(checked ? R.drawable.background_item : R.drawable.background_item2);
     }
 
     @Override
@@ -54,7 +55,8 @@ public class CheckableLayout extends RelativeLayout implements Checkable {
 
     public void setTextResId(int resId){
         if(mSelTextView != null){
-            mSelTextView.setBackgroundColor(resId);
+//            mSelTextView.setBackgroundColor(resId);
+            System.out.println("hi");
         }
     }
 }

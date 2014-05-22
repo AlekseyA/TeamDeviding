@@ -1,6 +1,7 @@
 package com.n1.teamdeviding.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
@@ -28,6 +29,7 @@ import static com.n1.teamdeviding.app.R.drawable.selector;
 public class MainActivity extends Activity {//implements AdapterView.OnItemSelectedListener {
 
     public ArrayList<Player> playersList = new ArrayList<Player>();
+    public static ArrayList<Player> currentGamePlayers = new ArrayList<Player>();
     ActionMode actionMode;
     CustomAdapter adapter;
     GridView gridView;
@@ -50,6 +52,11 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemSelec
             public void onItemCheckedStateChanged(ActionMode actionMode, int pos, long id, boolean checked) {
                 Log.d(LOG_TAG, "pos = " + pos + ", checked = " + checked);
                 int selectCount = gridView.getCheckedItemCount();
+                if(checked){
+                    currentGamePlayers.add(playersList.get(pos));
+                } else {
+                    currentGamePlayers.remove(playersList.get(pos));
+                }
                 switch (selectCount){
                     case 1:
                         actionMode.setSubtitle("One player selected");
@@ -58,13 +65,14 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemSelec
                         actionMode.setSubtitle("" + selectCount + " player selected");
                         break;
                 }
+                System.out.println("List:" + currentGamePlayers);
             }
 
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
                 actionMode.setTitle("Select players");
                 actionMode.setSubtitle("One player selected");
-                //actionMode.getMenuInflater().inflate(R.menu.context, menu);
+                actionMode.getMenuInflater().inflate(R.menu.context, menu);
                 return true;
             }
 
@@ -75,7 +83,9 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemSelec
 
             @Override
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-//                actionMode.finish();
+                System.out.println("CLICK");
+                Intent intent = new Intent(MainActivity.this, TotalTeams.class);
+                startActivity(intent);
                 return true;
             }
 
@@ -125,7 +135,7 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemSelec
 
     private void createList(){
 
-        Player Aleksey = new Player("Алексей", 7);
+        Player Aleksey = new Player("Алексей", 7, R.drawable.aleksey);
         Player Ilya = new Player("Илья", 4);
         Player Anton = new Player("Антон", 4);
         Player Alex_Ch = new Player("Саша Ч.", 5);
