@@ -29,7 +29,7 @@ import static com.n1.teamdeviding.app.R.drawable.selector;
 public class MainActivity extends Activity {//implements AdapterView.OnItemSelectedListener {
 
     public ArrayList<Player> playersList = new ArrayList<Player>();
-    public static ArrayList<Player> currentGamePlayers = new ArrayList<Player>();
+    public ArrayList<Player> currentGamePlayers = new ArrayList<Player>();
     ActionMode actionMode;
     CustomAdapter adapter;
     GridView gridView;
@@ -85,13 +85,14 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemSelec
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
                 System.out.println("CLICK");
                 Intent intent = new Intent(MainActivity.this, TotalTeams.class);
+                intent.putExtra("list", currentGamePlayers);
                 startActivity(intent);
                 return true;
             }
 
             @Override
             public void onDestroyActionMode(ActionMode actionMode) {
-
+                currentGamePlayers.clear();
             }
         });
     }
@@ -136,20 +137,22 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemSelec
     private void createList(){
 
         Player Aleksey = new Player("Алексей", 7, R.drawable.aleksey);
-        Player Ilya = new Player("Илья", 4);
-        Player Anton = new Player("Антон", 4);
+        Player Ilya = new Player("Илья", 4, R.drawable.ilay);
+        Player Anton = new Player("Антон", 4, R.drawable.anton);
         Player Alex_Ch = new Player("Саша Ч.", 5);
-        Player Alex_R = new Player("Саша Р.", 5);
+        Player Alex_R = new Player("Саша Р.", 5, R.drawable.sasha_r);
         Player Alex_H = new Player("Саша Х.", 4);
-        Player Alex_P = new Player("Саша П.", 2);
+        Player Alex_P = new Player("Саша П.", 3, R.drawable.sasha_p);
         Player Vadim = new Player("Вадим", 4);
-        Player Igor = new Player("Игорь", 4);
-        Player Sergei = new Player("Сергей", 4);
-        Player Artem = new Player("Артем", 4);
-        Player Nikolay = new Player("Николай", 5);
-        Player Ivan = new Player("Иван", 4);
+        Player Igor = new Player("Игорь", 4, R.drawable.igor);
+        Player Sergei = new Player("Сергей", 4, R.drawable.sergei);
+        Player Artem = new Player("Артем", 4, R.drawable.artem);
+        Player Nikolay = new Player("Николай", 5, R.drawable.nikolay);
+        Player Ivan = new Player("Иван", 4, R.drawable.ivan);
         Player Zhenya = new Player("Женя", 5);
-        Player Maxim = new Player("Максим", 5);
+        Player Maxim_k = new Player("Макс К.", 5, R.drawable.max_k);
+        Player Maxim_t = new Player("Макс Т.", 5);
+        Player Valek = new Player("Валентин", 5);
         playersList.add(Aleksey);
         playersList.add(Ilya);
         playersList.add(Anton);
@@ -164,7 +167,9 @@ public class MainActivity extends Activity {//implements AdapterView.OnItemSelec
         playersList.add(Nikolay);
         playersList.add(Ivan);
         playersList.add(Zhenya);
-        playersList.add(Maxim);
+        playersList.add(Maxim_k);
+        playersList.add(Maxim_t);
+        playersList.add(Valek);
     }
 
     private void adjustGridView() {

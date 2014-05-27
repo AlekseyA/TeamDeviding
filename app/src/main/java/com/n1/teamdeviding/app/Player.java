@@ -2,10 +2,12 @@ package com.n1.teamdeviding.app;
 
 import android.graphics.drawable.Drawable;
 
+import java.io.Serializable;
+
 /**
  * Created by aleksey on 5/19/14.
  */
-public class Player {
+public class Player implements Serializable{
     private String name;
     private int skill;
     private int photo;

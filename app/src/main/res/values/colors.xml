@@ -2,7 +2,7 @@
 <resources>
     <!--<color name="orange">#ff8800</color>-->
     <color name="orange">#0099cc</color>
-    <color name="night_grey">#333333</color>
+    <color name="night_grey">#ff5e5e5e</color>
     <color name="cool_blue">#0099cc</color>
     <color name="cool_green">#ff15ba00</color>
     <color name="transparent">#00000000</color>

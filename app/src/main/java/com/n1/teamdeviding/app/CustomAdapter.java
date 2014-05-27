@@ -22,11 +22,19 @@ import java.util.ArrayList;
 public class CustomAdapter extends ArrayAdapter<Player> {
     private ArrayList<Player> playerList;
     private Context context;
+    boolean smallItems;
 
     public CustomAdapter(Context ctx, ArrayList<Player> list){
-        super(ctx,R.layout.item, list);
+        super(ctx, R.layout.item, list);
         this.playerList = list;
         this.context = ctx;
+    }
+
+    public CustomAdapter(Context ctx, ArrayList<Player> list, boolean small){
+        super(ctx, R.layout.item_small, list);
+        this.playerList = list;
+        this.context = ctx;
+        this.smallItems = small;
     }
 
 
@@ -40,14 +48,12 @@ public class CustomAdapter extends ArrayAdapter<Player> {
         if(convertView == null){
             checkableLayout = new CheckableLayout(context);
             checkableLayout.setLayoutParams(new GridView.LayoutParams(CheckableLayout.LayoutParams.WRAP_CONTENT, GridView.LayoutParams.WRAP_CONTENT));
-//            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            convertView = inflater.inflate(R.layout.item, parent, false);
         } else {
             checkableLayout = (CheckableLayout)convertView;
         }
 
-        ImageView imageView = (ImageView)checkableLayout.findViewById(R.id.imgItem);
-        TextView textView = (TextView)checkableLayout.findViewById(R.id.textItem);
+        ImageView imageView = (ImageView)checkableLayout.findViewById(smallItems ? R.id.imgItemSmall : R.id.imgItem);
+        TextView textView = (TextView)checkableLayout.findViewById(smallItems ? R.id.textItemSmall : R.id.textItem);
         Player player = playerList.get(position);
         imageView.setImageResource(player.getPhoto());
         textView.setText(player.getName());
